@@ -1,13 +1,24 @@
 package com.oberson.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "user_tab")
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String emsil;
+	private String email;
 	private String phone;
 	private String password;
 	
@@ -23,7 +34,7 @@ public class User {
 		
 		this.id = id;
 		this.name = name;
-		this.emsil = emsil;
+		this.email = emsil;
 		this.phone = phone;
 		this.password = password;
 	}
@@ -55,13 +66,13 @@ public class User {
 
 
 	public String getEmsil() {
-		return emsil;
+		return email;
 	}
 
 
 
 	public void setEmsil(String emsil) {
-		this.emsil = emsil;
+		this.email = emsil;
 	}
 
 
