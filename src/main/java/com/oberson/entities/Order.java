@@ -1,6 +1,10 @@
 package com.oberson.entities;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,35 +16,30 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_order")
-public class Order {
-
+public class Order implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@JsonFormat(pattern = "MM/dd/yyyy")
 	private LocalDate moment = LocalDate.now();
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
-	
-	
-	
-	public User getClient() {
-		return client;
-	}
-
-	public void setClient(User client) {
-		this.client = client;
-	}
 
 	public Order() {
 		super();
 	}
 
-	public Order(Integer id, LocalDate moment) {
+	public Order(Integer id, User client) {
 		super();
 		this.id = id;
-		this.moment = moment;
+		//this.moment = moment;
+		this.client = client;
 	}
 
 	public Integer getId() {
@@ -50,13 +49,21 @@ public class Order {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+/*
 	public LocalDate getMoment() {
 		return moment;
 	}
 
 	public void setMoment(LocalDate moment) {
 		this.moment = moment;
+	}
+*/
+	public User getClient() {
+		return client;
+	}
+
+	public void setClient(User client) {
+		this.client = client;
 	}
 
 	@Override
@@ -75,7 +82,7 @@ public class Order {
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
 	}
-
+	
 	
 	
 	
