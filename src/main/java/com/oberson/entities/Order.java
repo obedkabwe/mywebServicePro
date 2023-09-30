@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.oberson.entities.enums.OrderStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +26,8 @@ public class Order implements Serializable{
 	private Integer id;
 	@JsonFormat(pattern = "MM/dd/yyyy")
 	private LocalDate moment = LocalDate.now();
-	
+	private int orderStatus;
+	 
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "client_id")
@@ -35,10 +37,10 @@ public class Order implements Serializable{
 		super();
 	}
 
-	public Order(Integer id, User client) {
+	public Order(Integer id, User client, OrderStatus orderStatus) {
 		super();
 		this.id = id;
-		//this.moment = moment;
+		this.orderStatus = orderStatus.getCode();
 		this.client = client;
 	}
 
@@ -49,15 +51,16 @@ public class Order implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-/*
-	public LocalDate getMoment() {
-		return moment;
+
+	
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.toEnum(orderStatus);
 	}
 
-	public void setMoment(LocalDate moment) {
-		this.moment = moment;
+	public void setOrderStatus(int orderStatus) {
+		this.orderStatus = orderStatus;
 	}
-*/
+
 	public User getClient() {
 		return client;
 	}

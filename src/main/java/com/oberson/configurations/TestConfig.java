@@ -1,6 +1,6 @@
 package com.oberson.configurations;
 
-import java.time.LocalDate;
+
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.oberson.entities.Order;
 import com.oberson.entities.User;
+import com.oberson.entities.enums.OrderStatus;
 import com.oberson.repositories.OrderRepository;
 import com.oberson.repositories.UserRepository;
 
@@ -33,9 +34,9 @@ public class TestConfig implements CommandLineRunner {
 		
 		userRepository.saveAll(Arrays.asList(u1,u2));
 		
-		Order o1 = new Order(null, u1);
-		Order o2 = new Order(null, u2);
-		Order o3 = new Order(null, u1);
+		Order o1 = new Order(null,u1,OrderStatus.WAITING_PAYMENT);
+		Order o2 = new Order(null,u2, OrderStatus.CANCELED);
+		Order o3 = new Order(null, u1, OrderStatus.SHIPPED);
 		
 		orderRepository.saveAll(Arrays.asList(o1,o2,o3));
 		
